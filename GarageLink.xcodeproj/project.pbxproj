@@ -6,6 +6,12 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		83561F622D29EFED00B2D9C7 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 83561F612D29EFED00B2D9C7 /* FirebaseAuth */; };
+		83561F642D29EFED00B2D9C7 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 83561F632D29EFED00B2D9C7 /* FirebaseFirestore */; };
+		83561F662D29EFED00B2D9C7 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 83561F652D29EFED00B2D9C7 /* FirebaseStorage */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		83E964B82D285346006E7700 /* GarageLink.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GarageLink.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +29,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				83561F622D29EFED00B2D9C7 /* FirebaseAuth in Frameworks */,
+				83561F642D29EFED00B2D9C7 /* FirebaseFirestore in Frameworks */,
+				83561F662D29EFED00B2D9C7 /* FirebaseStorage in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +74,9 @@
 			);
 			name = GarageLink;
 			packageProductDependencies = (
+				83561F612D29EFED00B2D9C7 /* FirebaseAuth */,
+				83561F632D29EFED00B2D9C7 /* FirebaseFirestore */,
+				83561F652D29EFED00B2D9C7 /* FirebaseStorage */,
 			);
 			productName = GarageLink;
 			productReference = 83E964B82D285346006E7700 /* GarageLink.app */;
@@ -94,6 +106,9 @@
 			);
 			mainGroup = 83E964AF2D285346006E7700;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				83561F602D29EFED00B2D9C7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 83E964B92D285346006E7700 /* Products */;
 			projectDirPath = "";
@@ -255,11 +270,13 @@
 				DEVELOPMENT_TEAM = WXG7HSGQZP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "App needs to access location to show customers & mechanics around you";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -284,11 +301,13 @@
 				DEVELOPMENT_TEAM = WXG7HSGQZP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "App needs to access location to show customers & mechanics around you";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -324,6 +343,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		83561F602D29EFED00B2D9C7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		83561F612D29EFED00B2D9C7 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 83561F602D29EFED00B2D9C7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		83561F632D29EFED00B2D9C7 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 83561F602D29EFED00B2D9C7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+		83561F652D29EFED00B2D9C7 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 83561F602D29EFED00B2D9C7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 83E964B02D285346006E7700 /* Project object */;
 }
