@@ -24,6 +24,7 @@ final class AuthManager {
     private func setupListener() {
         _ = Auth.auth().addStateDidChangeListener { auth, user in
             self.isLoggedIn = user != nil
+            print("AuthID: \(user?.uid)")
         }
     }
     

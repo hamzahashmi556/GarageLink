@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		831AF6372D2CA49A0065DC94 /* GeoFire in Frameworks */ = {isa = PBXBuildFile; productRef = 831AF6362D2CA49A0065DC94 /* GeoFire */; };
+		831AF6392D2CA49A0065DC94 /* GeoFireUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 831AF6382D2CA49A0065DC94 /* GeoFireUtils */; };
 		83561F622D29EFED00B2D9C7 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 83561F612D29EFED00B2D9C7 /* FirebaseAuth */; };
 		83561F642D29EFED00B2D9C7 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 83561F632D29EFED00B2D9C7 /* FirebaseFirestore */; };
 		83561F662D29EFED00B2D9C7 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 83561F652D29EFED00B2D9C7 /* FirebaseStorage */; };
@@ -19,6 +21,8 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		83E964BA2D285346006E7700 /* GarageLink */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = GarageLink;
 			sourceTree = "<group>";
 		};
@@ -32,17 +36,27 @@
 				83561F622D29EFED00B2D9C7 /* FirebaseAuth in Frameworks */,
 				83561F642D29EFED00B2D9C7 /* FirebaseFirestore in Frameworks */,
 				83561F662D29EFED00B2D9C7 /* FirebaseStorage in Frameworks */,
+				831AF6392D2CA49A0065DC94 /* GeoFireUtils in Frameworks */,
+				831AF6372D2CA49A0065DC94 /* GeoFire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3416A42464D70C3DAF13B5D2 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 		83E964AF2D285346006E7700 = {
 			isa = PBXGroup;
 			children = (
 				83E964BA2D285346006E7700 /* GarageLink */,
 				83E964B92D285346006E7700 /* Products */,
+				3416A42464D70C3DAF13B5D2 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -77,6 +91,8 @@
 				83561F612D29EFED00B2D9C7 /* FirebaseAuth */,
 				83561F632D29EFED00B2D9C7 /* FirebaseFirestore */,
 				83561F652D29EFED00B2D9C7 /* FirebaseStorage */,
+				831AF6362D2CA49A0065DC94 /* GeoFire */,
+				831AF6382D2CA49A0065DC94 /* GeoFireUtils */,
 			);
 			productName = GarageLink;
 			productReference = 83E964B82D285346006E7700 /* GarageLink.app */;
@@ -108,6 +124,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				83561F602D29EFED00B2D9C7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+				831AF6352D2CA49A0065DC94 /* XCRemoteSwiftPackageReference "geofire-objc" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 83E964B92D285346006E7700 /* Products */;
@@ -270,7 +287,7 @@
 				DEVELOPMENT_TEAM = WXG7HSGQZP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "App needs to access location to show customers & mechanics around you";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "App needs to access location to show customers & mechanics around you";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -301,7 +318,7 @@
 				DEVELOPMENT_TEAM = WXG7HSGQZP;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "App needs to access location to show customers & mechanics around you";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "App needs to access location to show customers & mechanics around you";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -345,6 +362,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		831AF6352D2CA49A0065DC94 /* XCRemoteSwiftPackageReference "geofire-objc" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/geofire-objc.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		83561F602D29EFED00B2D9C7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -356,6 +381,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		831AF6362D2CA49A0065DC94 /* GeoFire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 831AF6352D2CA49A0065DC94 /* XCRemoteSwiftPackageReference "geofire-objc" */;
+			productName = GeoFire;
+		};
+		831AF6382D2CA49A0065DC94 /* GeoFireUtils */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 831AF6352D2CA49A0065DC94 /* XCRemoteSwiftPackageReference "geofire-objc" */;
+			productName = GeoFireUtils;
+		};
 		83561F612D29EFED00B2D9C7 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 83561F602D29EFED00B2D9C7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;

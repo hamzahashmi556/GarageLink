@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreLocation
+import FirebaseFirestore
 
 final class LocationManager: NSObject, CLLocationManagerDelegate {
     
@@ -26,7 +27,8 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
     
     private override init() {
         super.init()
-        locationManager.delegate = self
+        self.locationManager.delegate = self
+        self.checkLocationPermission()
     }
     
     private func checkLocationPermission() {
@@ -93,5 +95,12 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
         self.updatePlaceMarks(location: location)
                 
         self.location = location
+    }
+}
+
+extension CLLocation {
+    
+    func toGeoPoint() -> GeoPoint {
+        return GeoPoint(latitude: self.coordinate.latitude, longitude: self.coordinate.longitude)
     }
 }

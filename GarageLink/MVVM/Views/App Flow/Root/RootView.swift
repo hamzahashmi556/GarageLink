@@ -25,9 +25,7 @@ struct RootView: View {
                 CreateAccountView()
                 
             case .home:
-                Button("Logout") {
-                    try? AuthManager.shared.signOut()
-                }
+                TabbarView()
             }
         }
         .environmentObject(router)

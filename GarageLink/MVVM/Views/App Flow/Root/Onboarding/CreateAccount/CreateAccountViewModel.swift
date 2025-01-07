@@ -8,6 +8,8 @@
 import Foundation
 import Combine
 import UIKit
+import Firebase
+import CoreLocation
 
 class CreateAccountViewModel: ObservableObject {
     
@@ -26,8 +28,8 @@ class CreateAccountViewModel: ObservableObject {
         city: "",
         country: "",
         fullAddress: "",
-        zipCode: "",
-        coordinate: Coordinate(latitude: 0, longitude: 0)
+        zipCode: ""
+//        coordinate: Coordinate(latitude: 0, longitude: 0)
     )
     
     @Published var mechanicDetails = MechanicDetails(
@@ -40,13 +42,15 @@ class CreateAccountViewModel: ObservableObject {
         
     @Published var isLoading = false
     
+    @Published var location = CLLocation()
+    
     private var cancellables = Set<AnyCancellable>()
     
     init() {
         LocationManager.shared.$location
             .receive(on: RunLoop.main)
             .sink { location in
-                
+                self.location = location
             }
             .store(in: &cancellables)
         
@@ -93,12 +97,12 @@ class CreateAccountViewModel: ObservableObject {
         Task { @MainActor in
             self.isLoading = true
             do {
-                let mechanic = Mechanic(
+                try await MechanicManager.shared.create(
                     bio: bio,
                     address: address,
-                    details: mechanicDetails
+                    details: mechanicDetails,
+                    location: location
                 )
-                try await MechanicManager.shared.create(mechanic: mechanic)
             }
             catch {
                 AlertManager.shared.showAlert(title: error.localizedDescription)
