@@ -17,6 +17,8 @@ class CreateAccountViewModel: ObservableObject {
     
     @Published var selectedImage: UIImage?
     
+    @Published var isPresentedPicker = false
+    
     @Published var bio = Bio(
         firstName: "",
         lastName: "",
@@ -36,8 +38,7 @@ class CreateAccountViewModel: ObservableObject {
         vehicleTypes: [],
         description: "",
         expertise: "",
-        experience: "",
-        images: []
+        experience: ""
     )
         
     @Published var isLoading = false
@@ -108,15 +109,6 @@ class CreateAccountViewModel: ObservableObject {
                 AlertManager.shared.showAlert(title: error.localizedDescription)
             }
             self.isLoading = false
-        }
-    }
-    
-    func updateVehicle(_ vehicle: VehicleType) {
-        if let index = mechanicDetails.vehicleTypes.firstIndex(where: { $0 == vehicle }) {
-            mechanicDetails.vehicleTypes.remove(at: index)
-        }
-        else {
-            mechanicDetails.vehicleTypes.append(vehicle)
         }
     }
 }

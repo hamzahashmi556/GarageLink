@@ -48,7 +48,7 @@ class LoginViewModel: ObservableObject {
             title: "Forgot Password?",
             message: "Enter your email address to recieve reset password link",
             alertCancelAction: nil,
-            alertPrimaryAction: resetPasswordPrimaryAction
+            alertPrimaryAction: AlertAction(title: "Reset", action: resetPasswordPrimaryAction)
         )
     }
     

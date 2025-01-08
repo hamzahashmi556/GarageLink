@@ -31,9 +31,14 @@ class HomeViewModel: ObservableObject {
     private func fetchMechanics(location: CLLocation) {
         Task { @MainActor in
             do {
-                let mechanics = try await MechanicManager.shared.fetchMechanics(around: location, radiusInM: 500)
-                print("Mechanics fetched: \(mechanics.count)")
+                let mechanics = try await MechanicManager.shared.fetchMechanics(around: location, radiusInM: 5000)
+//                try await MechanicManager.shared.storeHash()
+                print("Hash Stored")
+//                try await MechanicManager.shared.get()
+                print("Hash Fetched")
+//                print("Mechanics fetched: \(mechanics.count)")
                 mechanics.forEach({print("\n\($0)")})
+                self.mechanics = mechanics
             }
             catch {
                 print(#function, error)

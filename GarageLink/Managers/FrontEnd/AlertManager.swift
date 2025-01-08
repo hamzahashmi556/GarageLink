@@ -15,9 +15,9 @@ final class AlertManager {
     
     @Published var message: String? = nil
     
-    @Published var cancelAction: (() -> Void)? = nil
+    @Published var cancelAction: AlertAction? = nil
     
-    @Published var primaryAction: (() -> Void)? = nil
+    @Published var primaryAction: AlertAction? = nil
     
     static let shared = AlertManager()
     
@@ -30,8 +30,8 @@ final class AlertManager {
     
     func showAlert(title: String,
                    message: String = "",
-                   alertCancelAction: (() -> Void)? = nil,
-                   alertPrimaryAction: (() -> Void)? = nil) {
+                   alertCancelAction: AlertAction? = nil,
+                   alertPrimaryAction: AlertAction? = nil) {
         self.isPresent = true
         self.title = title
         self.message = message
@@ -47,4 +47,9 @@ final class AlertManager {
         self.cancelAction = nil
         self.primaryAction = nil
     }
+}
+
+struct AlertAction {
+    var title: String
+    var action: () -> Void
 }

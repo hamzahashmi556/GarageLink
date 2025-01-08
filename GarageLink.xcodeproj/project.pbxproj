@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		831AF6372D2CA49A0065DC94 /* GeoFire in Frameworks */ = {isa = PBXBuildFile; productRef = 831AF6362D2CA49A0065DC94 /* GeoFire */; };
 		831AF6392D2CA49A0065DC94 /* GeoFireUtils in Frameworks */ = {isa = PBXBuildFile; productRef = 831AF6382D2CA49A0065DC94 /* GeoFireUtils */; };
+		834D4D312D2E6A2300EFA111 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 834D4D302D2E6A2300EFA111 /* Kingfisher */; };
 		83561F622D29EFED00B2D9C7 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 83561F612D29EFED00B2D9C7 /* FirebaseAuth */; };
 		83561F642D29EFED00B2D9C7 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 83561F632D29EFED00B2D9C7 /* FirebaseFirestore */; };
 		83561F662D29EFED00B2D9C7 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 83561F652D29EFED00B2D9C7 /* FirebaseStorage */; };
@@ -21,8 +22,6 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		83E964BA2D285346006E7700 /* GarageLink */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
 			path = GarageLink;
 			sourceTree = "<group>";
 		};
@@ -33,6 +32,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				834D4D312D2E6A2300EFA111 /* Kingfisher in Frameworks */,
 				83561F622D29EFED00B2D9C7 /* FirebaseAuth in Frameworks */,
 				83561F642D29EFED00B2D9C7 /* FirebaseFirestore in Frameworks */,
 				83561F662D29EFED00B2D9C7 /* FirebaseStorage in Frameworks */,
@@ -93,6 +93,7 @@
 				83561F652D29EFED00B2D9C7 /* FirebaseStorage */,
 				831AF6362D2CA49A0065DC94 /* GeoFire */,
 				831AF6382D2CA49A0065DC94 /* GeoFireUtils */,
+				834D4D302D2E6A2300EFA111 /* Kingfisher */,
 			);
 			productName = GarageLink;
 			productReference = 83E964B82D285346006E7700 /* GarageLink.app */;
@@ -125,6 +126,7 @@
 			packageReferences = (
 				83561F602D29EFED00B2D9C7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 				831AF6352D2CA49A0065DC94 /* XCRemoteSwiftPackageReference "geofire-objc" */,
+				834D4D2F2D2E6A2300EFA111 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 83E964B92D285346006E7700 /* Products */;
@@ -370,6 +372,14 @@
 				kind = branch;
 			};
 		};
+		834D4D2F2D2E6A2300EFA111 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.1.3;
+			};
+		};
 		83561F602D29EFED00B2D9C7 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
@@ -390,6 +400,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 831AF6352D2CA49A0065DC94 /* XCRemoteSwiftPackageReference "geofire-objc" */;
 			productName = GeoFireUtils;
+		};
+		834D4D302D2E6A2300EFA111 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 834D4D2F2D2E6A2300EFA111 /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 		83561F612D29EFED00B2D9C7 /* FirebaseAuth */ = {
 			isa = XCSwiftPackageProductDependency;

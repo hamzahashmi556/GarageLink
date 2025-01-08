@@ -7,6 +7,7 @@
 
 import FirebaseAuth
 import FirebaseFirestore
+import FirebaseFirestoreInternal
 import Firebase
 import CoreLocation
 import GeoFire
@@ -59,7 +60,7 @@ final class MechanicManager {
         
         try await ref.document(uid).setData(json)
         
-//        try await mechanic.setDataInFirestore(documentReference: ref.document(uid))
+        //        try await mechanic.setDataInFirestore(documentReference: ref.document(uid))
         
         self.mechanic = mechanic
     }
@@ -94,6 +95,15 @@ final class MechanicManager {
     // MARK: - For Customers
     
     func fetchMechanics(around location: CLLocation, radiusInM radius: Double) async throws -> [Mechanic] {
+        
+        let snapshot = try await ref.getDocuments()
+        let documents = snapshot.documents
+        let mechanics = documents.compactMap({
+            try? $0.data(as: Mechanic.self)
+        })
+        return mechanics
+
+        
         
         let center = location.coordinate
         
@@ -136,7 +146,10 @@ final class MechanicManager {
     private func fetchMatchingDocs(from query: Query, center: CLLocationCoordinate2D, radiusInMeters: Double) async throws -> [Mechanic] {
         
         let snapshot = try await query.getDocuments()
+                
+        let documents = snapshot.documents
         
+        print(documents.isEmpty ? "No documents found" : "Found \(snapshot.documents.count) documents")
         
         let parsedMechanics = snapshot.documents.compactMap({ try? $0.data(as: Mechanic.self) })
         
@@ -153,8 +166,93 @@ final class MechanicManager {
         
         return nearestMechanics
         /*
+         // Collect all the query results together into a single list
+         return snapshot.documents.filter { document in
+         let lat = document.data()["lat"] as? Double ?? 0
+         let lng = document.data()["lng"] as? Double ?? 0
+         let coordinates = CLLocation(latitude: lat, longitude: lng)
+         let centerPoint = CLLocation(latitude: center.latitude, longitude: center.longitude)
+         
+         // We have to filter out a few false positives due to GeoHash accuracy, but
+         // most will match
+         let distance = GFUtils.distance(from: centerPoint, to: coordinates)
+         return distance <= radiusInMeters
+         }
+         */
+    }
+    
+    func storeHash() async throws {
+        
+        let db = Firestore.firestore()
+        
+        // Compute the GeoHash for a lat/lng point
+        let latitude = 51.5074
+        let longitude = 0.12780
+        let location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+        
+        let hash = GFUtils.geoHash(forLocation: location)
+        
+        // Add the hash and the lat/lng to the document. We will use the hash
+        // for queries and the lat/lng for distance comparisons.
+        let documentData: [String: Any] = [
+            "geohash": hash,
+            "lat": latitude,
+            "lng": longitude
+        ]
+        
+        let londonRef = db.collection("cities").document("LON")
+        try await londonRef.setData(documentData)
+    }
+    /*
+    func get() async throws {
+        // Find cities within 50km of London
+        let center = CLLocationCoordinate2D(latitude: 51.5074, longitude: 0.1278)
+        let radiusInM: Double = 50 * 1000
+        
+        // Each item in 'bounds' represents a startAt/endAt pair. We have to issue
+        // a separate query for each pair. There can be up to 9 pairs of bounds
+        // depending on overlap, but in most cases there are 4.
+        let queryBounds = GFUtils.queryBounds(forLocation: center,
+                                              withRadius: radiusInM)
+        let queries = queryBounds.map { bound -> Query in
+            return Firestore.firestore().collection("cities")
+                .order(by: "geohash")
+                .start(at: [bound.startValue])
+                .end(at: [bound.endValue])
+        }
+        
+        
+        
+        // After all callbacks have executed, matchingDocs contains the result. Note that this code
+        // executes all queries serially, which may not be optimal for performance.
+        do {
+            let matchingDocs = try await withThrowingTaskGroup(of: [QueryDocumentSnapshot].self) { group -> [QueryDocumentSnapshot] in
+                for query in queries {
+                    group.addTask {
+                        try await self.fetchMatchingDocs(from: query, center: center, radiusInM: radiusInM)
+                    }
+                }
+                var matchingDocs = [QueryDocumentSnapshot]()
+                for try await documents in group {
+                    matchingDocs.append(contentsOf: documents)
+                }
+                return matchingDocs
+            }
+            
+            print("Docs matching geoquery: \(matchingDocs)")
+        } catch {
+            print("Unable to fetch snapshot data. \(error)")
+        }
+    }
+    
+    @Sendable func fetchMatchingDocs(from query: Query,
+                                     center: CLLocationCoordinate2D,
+                                     radiusInM: Double) async throws -> [QueryDocumentSnapshot] {
+        let snapshot = try await query.getDocuments()
+        
+        let documents = snapshot.documents
         // Collect all the query results together into a single list
-        return snapshot.documents.filter { document in
+        return documents.filter { document in
             let lat = document.data()["lat"] as? Double ?? 0
             let lng = document.data()["lng"] as? Double ?? 0
             let coordinates = CLLocation(latitude: lat, longitude: lng)
@@ -163,71 +261,8 @@ final class MechanicManager {
             // We have to filter out a few false positives due to GeoHash accuracy, but
             // most will match
             let distance = GFUtils.distance(from: centerPoint, to: coordinates)
-            return distance <= radiusInMeters
+            return distance <= radiusInM
         }
-        */
     }
-    
-//    func fetchMechanics(around location: CLLocation, radius: Double) async -> [Mechanic] {
-//        
-//        let center = location.coordinate
-//        
-//        // radius in meters
-//        let geoHashQueryBounds = GFUtils.queryBounds(forLocation: center, withRadius: radius * 1000)
-//        
-//        var mechanics: [Mechanic] = []
-//        
-//        for bound in geoHashQueryBounds {
-//            do {
-//                let documents = try await ref.order(by: "location.geoHash")
-//                    .start(at: [bound.startValue])
-//                    .end(at: [bound.endValue])
-//                    .getDocuments()
-//                    .documents
-//                
-//                for document in documents {
-//                    
-//                    do {
-//                        let mechanic = try document.data(as: Mechanic.self)
-//                        
-//                        let geoPoint = mechanic.location
-//                        
-//                        let geoHash = String(geoPoint.hash)
-//                        
-//                        let distance = GFUtils.distance(
-//                            from: location,
-//                            to: CLLocation(
-//                                latitude: mechanic.location.latitude,
-//                                longitude: mechanic.location.longitude
-//                            )
-//                        )
-//                        
-//                        if distance <= radius {
-//                            mechanics.append(mechanic)
-//                        }
-//                        
-////                        let geoHash = document.data()["location.geoHash"] as? String ?? ""
-//                    }
-//                    catch {
-//                        
-//                    }
-//                    let geoHash = document.data()["location.geoHash"] as? String ?? ""
-//                    let documentLocation = document.data()["location"] as? GeoPoint
-////                    let distance = GFUtils.distance(from: center, to: documentLocation)
-//                    
-//                    // Filter by exact radius
-////                    if distance <= radius {
-////                        if let mechanic = try? document.data(as: Mechanic.self) {
-////                            mechanics.append(mechanic)
-////                        }
-////                    }
-//                }
-//            }
-//            catch {
-//                print("Error fetching mechanics: \(error.localizedDescription ?? "")")
-//            }
-//        }
-//        
-//        return mechanics
-//    }
+     */
 }

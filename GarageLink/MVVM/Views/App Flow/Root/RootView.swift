@@ -33,12 +33,12 @@ struct RootView: View {
             vm.alertTitle,
             isPresented: $vm.showAlert,
             actions: {
-                if vm.alertPrimaryAction != nil {
-                    Button("", role: .cancel, action: vm.alertPrimaryAction!)
+                if let action1 = vm.alertPrimaryAction {
+                    Button(action1.title, role: .cancel, action: action1.action)
                 }
                 
-                if vm.alertCancelAction != nil {
-                    Button("", role: .cancel, action: vm.alertCancelAction!)
+                if let action2 = vm.alertPrimaryAction {
+                    Button(action2.title, role: .cancel, action: action2.action)
                 }
             },
             message: {

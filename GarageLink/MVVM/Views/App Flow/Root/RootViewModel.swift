@@ -18,9 +18,9 @@ class RootViewModel: ObservableObject {
     
     @Published var alertMessage: String? = nil
     
-    @Published var alertCancelAction: (() -> Void)? = nil
+    @Published var alertCancelAction: AlertAction? = nil
     
-    @Published var alertPrimaryAction: (() -> Void)? = nil
+    @Published var alertPrimaryAction: AlertAction? = nil
     
     @Published var screenFlow: ScreenFlow = .login
     

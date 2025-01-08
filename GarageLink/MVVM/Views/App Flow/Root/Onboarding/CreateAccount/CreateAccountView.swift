@@ -10,7 +10,7 @@ import SwiftUI
 struct CreateAccountView: View {
         
     @StateObject private var vm = CreateAccountViewModel()
-        
+    
     var body: some View {
         
         NavigationStack {
@@ -37,6 +37,15 @@ struct CreateAccountView: View {
                             .font(.title)
                             .bold()
                         
+                        Button {
+                            vm.isPresentedPicker.toggle()
+                        } label: {
+                            CircleImageView(selectedImage: vm.selectedImage, imageURL: vm.bio.profileImage)
+                        }
+                        .sheet(isPresented: $vm.isPresentedPicker) {
+                            ImagePicker(image: $vm.selectedImage)
+                        }
+                        
                         AppTextField("Enter your first name", text: $vm.bio.firstName)
                                                 
                         AppTextField("Enter your last name", text: $vm.bio.lastName)
@@ -58,28 +67,7 @@ struct CreateAccountView: View {
                             
                             Text("Select Vehicles you can work on")
                             
-                            ForEach(VehicleType.allCases, id: \.rawValue) { vehicle in
-                                
-                                Button {
-                                    vm.updateVehicle(vehicle)
-                                } label: {
-                                    HStack {
-                                        
-                                        if vm.mechanicDetails.vehicleTypes.contains(where: { $0 == vehicle }) {
-                                            Image(systemName: "checkmark.circle")
-                                        }
-                                        else {
-                                            Image(systemName: "circle")
-                                        }
-                                        
-                                        Text(vehicle.rawValue)
-                                            .font(.body)
-                                        
-                                        Spacer()
-                                    }
-                                    .foregroundStyle(Color.white)
-                                }
-                            }
+                            VehicleSelection(mechanicDetails: $vm.mechanicDetails)
                             
                             AppTextEditor(titleKey: "Enter Description", text: $vm.mechanicDetails.description)
                             

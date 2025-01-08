@@ -7,6 +7,7 @@
 
 import Firebase
 import FirebaseFirestore
+import FirebaseFirestoreInternal
 import FirebaseAuth
 
 final class UserManager {
@@ -30,7 +31,7 @@ final class UserManager {
         }
     }
     
-    func createCustomer(bio: Bio, addre: String = "") async throws {
+    func createCustomer(bio: Bio) async throws {
         
         guard let uid = Auth.auth().currentUser?.uid else {
             return

@@ -6,8 +6,7 @@
 //
 
 import Foundation
-import Firebase
-//import
+import FirebaseFirestoreInternal
 
 struct Mechanic: Codable {
     var bio: Bio
@@ -24,5 +23,5 @@ struct MechanicDetails: Codable {
     var description: String
     var expertise: String
     var experience: String
-    var images: [String]
+//    var images: [String]
 }
