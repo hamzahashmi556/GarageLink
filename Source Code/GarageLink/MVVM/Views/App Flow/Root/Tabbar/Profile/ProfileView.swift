@@ -63,10 +63,10 @@ struct ProfileView: View {
             Button {
                 vm.isPresentedPicker.toggle()
             } label: {
-                CircleImageView(selectedImage: vm.profileImage, imageURL: bio.profileImage)
+                CircleImageView(selectedImage: vm.selectedImage, imageURL: bio.profileImage)
             }
             .sheet(isPresented: $vm.isPresentedPicker) {
-                ImagePicker(image: $vm.profileImage)
+                ImagePicker(image: $vm.selectedImage)
             }
             .disabled(!vm.isEditing)
             .frame(maxWidth: .infinity, alignment: .center)

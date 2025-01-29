@@ -15,7 +15,7 @@ class ProfileViewModel: ObservableObject {
     
     @Published var isEditing = false
     
-    @Published var profileImage: UIImage? = nil
+    @Published var selectedImage: UIImage? = nil
     
     @Published var bio = Bio(
         firstName: "",
@@ -78,6 +78,15 @@ class ProfileViewModel: ObservableObject {
         Task { @MainActor in
         
             do {
+                
+                var url = String()
+                
+                if let selectedImage {
+                    url = try await StorageManager.shared.uploadImage(image: selectedImage).absoluteString
+                }
+                
+                bio.profileImage = url
+                
                 if userRole == .customer {
                     try await UserManager.shared.createCustomer(
                         bio: bio

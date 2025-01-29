@@ -1,17 +1,18 @@
 //
-//  HomeView.swift
+//  HomeViewModel.swift
 //  GarageLink
 //
-//  Created by Hamza Hashmi on 05/01/2025.
+//  Created by Hamza Hashmi on 08/01/2025.
 //
 
-import SwiftUI
 import CoreLocation
 import Combine
 
 class HomeViewModel: ObservableObject {
     
     @Published var isLoading = false
+    
+    @Published var userRole: UserRole? = nil
     
     @Published var mechanics: [Mechanic] = []
     
@@ -26,39 +27,30 @@ class HomeViewModel: ObservableObject {
                 }
             }
             .store(in: &cancellables)
+        
+        UserManager.shared.$userProfile
+            .combineLatest(MechanicManager.shared.$mechanic)
+            .receive(on: RunLoop.main)
+            .sink { (userProfile, mechanic) in
+                if let userProfile {
+                    self.userRole = .customer
+                }
+                else if let mechanic {
+                    self.userRole = .mechanic
+                }
+            }
+            .store(in: &cancellables)
     }
     
     private func fetchMechanics(location: CLLocation) {
         Task { @MainActor in
             do {
                 let mechanics = try await MechanicManager.shared.fetchMechanics(around: location, radiusInM: 5000)
-//                try await MechanicManager.shared.storeHash()
-                print("Hash Stored")
-//                try await MechanicManager.shared.get()
-                print("Hash Fetched")
-//                print("Mechanics fetched: \(mechanics.count)")
-                mechanics.forEach({print("\n\($0)")})
+                
                 self.mechanics = mechanics
             }
             catch {
                 print(#function, error)
-            }
-        }
-    }
-    
-}
-
-struct HomeView: View {
-    
-    @StateObject private var vm = HomeViewModel()
-    
-    var body: some View {
-        List {
-            Section {
-                ForEach(vm.mechanics.indices, id: \.self) { index in
-                    let mechanic = vm.mechanics[index]
-                    Text("\(mechanic.bio.firstName)  \(mechanic.bio.lastName)")
-                }
             }
         }
     }

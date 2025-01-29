@@ -96,8 +96,18 @@ class CreateAccountViewModel: ObservableObject {
     
     private func createMechanic() {
         Task { @MainActor in
+            
             self.isLoading = true
+            
             do {
+                var url = String()
+                
+                if let selectedImage {
+                    url = try await StorageManager.shared.uploadImage(image: selectedImage).absoluteString
+                }
+                
+                bio.profileImage = url
+                
                 try await MechanicManager.shared.create(
                     bio: bio,
                     address: address,
